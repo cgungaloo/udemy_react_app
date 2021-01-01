@@ -1,7 +1,5 @@
-node{
-    try{
-        stage('Environment'){
+node {
+        stage('Environment') {
             sh 'git --version'
         }
-    }
 }
