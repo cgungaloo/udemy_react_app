@@ -1,10 +1,12 @@
-node {
-        stage('Environment') {
-            sh 'git --version'
-            sh 'docker -v'
+pipeline {
+    agent {
+        docker { image 'node:14-alpine' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
         }
-
-        stage('Build docker image'){
-            sh 'build -t cgungaloo:react_list .'
-        }
+    }
 }
