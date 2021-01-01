@@ -1,25 +1,50 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import ValidationComponent from './ValidationComponent/ValidationComponent'
+import CharComponent from './CharComponent/CharComponent'
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  state =
+    {
+      wordLength: 0,
+      chars: []
+    }
+
+  onChangeListener = (event) => {
+    const wordString = [...event.target.value]
+    const wordLength = wordString.length
+    this.setState({ wordLength: wordLength })
+    this.setState({ chars: [...wordString] })
+  }
+
+  deleteChar = (index) => {
+    const chars = [...this.state.chars]
+    chars.splice(index, 1)
+    this.setState({ chars: chars })
+  }
+
+  render() {
+    let charlist = [];
+    if (this.state.chars.length > 0) {
+      charlist = (
+        <div>
+          {this.state.chars.map((char, index) => {
+            return <CharComponent char={char} key={index} delete={() => this.deleteChar(index)} />
+          })}
+        </div>
+      )
+    }
+
+    return (
+      <div className='App'>
+        <input type="text" onChange={(event) => this.onChangeListener(event)} />
+        <p>{this.state.wordLength}</p>
+        <ValidationComponent wordLength={this.state.wordLength} />
+        {charlist}
+      </div>
+    )
+  }
 }
 
 export default App;
+
