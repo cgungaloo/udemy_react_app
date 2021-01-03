@@ -1,12 +1,12 @@
-pipeline {
-    agent {
-        docker none
+node{
+
+    stage('Clone repository') {
+        checkout scm
     }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
+
+
+    stage('Test image') {
+        sh 'docker -v'
     }
+
 }
